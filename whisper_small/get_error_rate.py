@@ -52,26 +52,22 @@ def norm_english(raw_text):
     word_list = patt.findall(text)
     return " ".join(word_list)
 
-def compute_errors_jihad():
-    y = load_text("data/jihad/ref.txt", "char")
-    x = load_text("data/jihad/hyp.txt", "char")
-    cer_jihad, counts_jihad = get_er(y, x, unit="char")
-    print("CER: ", cer_jihad)
-    print(counts_jihad)
+def norm_japanese(raw_text):
+    patt = re.compile(r"[\u4e00-\u9fbf]|[\u3040-\u309f]|[\u30a0-\u30ff]")
+    char_list = patt.findall(raw_text)
+    return "".join(char_list)
 
-def compute_errors_beatit():
-    y = load_text("data/beatit/ref.txt")
-    x = load_text("data/beatit/hyp.txt")
-
+def compute_errors_english(y, x):
     y = norm_english(y)
     x = norm_english(x)
+    wer, counts = get_er(y, x)
+    print("WER: ", wer, counts)
 
-    cer, counts_beatit = get_er(y, x, unit="char")
-    print("CER: ", cer)
-    print(counts_beatit)
-    wer, counts_beatit = get_er(y, x,)
-    print("WER: ", wer)
-    print(counts_beatit)
+def compute_errors_japanese(y, x):
+    y = norm_japanese(y)
+    x = norm_japanese(x)
+    cer, counts = get_er(y, x, unit="char")
+    print("CER: ", cer, counts)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -79,9 +75,14 @@ if __name__ == "__main__":
         sys.exit(0)
     ref = sys.argv[1]
     hyp = sys.argv[2]
+    
     y = load_text(ref)
     x = load_text(hyp)
+    
     cer, counts = get_er(y, x, unit="char")
     print("CER: ", cer, counts)
+    
     wer, counts = get_er(y, x,)
     print("WER: ", wer, counts)
+    
+    # compute_errors_japanese(y, x)

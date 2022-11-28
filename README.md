@@ -8,12 +8,13 @@ Currently use [wiseman/py-webrtcvad](https://github.com/wiseman/py-webrtcvad) an
 Steps
 ```
 cd whisper_small
-python run.py [MUSIC.mp3] [OUTPUT-FOLDER]
+python transcribe_music.py [MUSIC.mp3] [OUTPUT-FOLDER]
 python get_error_rate.py [REF.txt] [HYP.txt]
 ```
 
 Results <br>
-(the audio is downloaded from Youtube, and the ground truth lyrics are taken from the first result of Google)
+(the audio files are downloaded from Youtube, and the lyrics are the first results of Google search)
+(maybe we need to exclude special characters for both lyrics and transcriptions)
 - Beat It (MJ, English)
   - [Transcriptions](whisper_small/data/beatit/hyp.txt) <br>
   - [Ground-truth](whisper_small/data/beatit/ref.txt) <br>

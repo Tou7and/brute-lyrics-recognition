@@ -16,8 +16,10 @@ def preprocess(mp3_path, segment_path):
     return wav_list
 
 def trans_loop(segments, output_path):
+    print("loading whisper...")
     model = whisper.load_model("small")
     sent_list = []
+    print("Start decoding...")
     for seg_path in segments:
         print(seg_path)
         result = model.transcribe(seg_path)
@@ -32,6 +34,13 @@ def trans_loop(segments, output_path):
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(f"usage: python {sys.argv[0]} [MUSIC.mp3] [OUTPUT-FOLDER]")
-    # wav_list = preprocess("/Users/mac/personal-collections/music/league-of-legends/kda/star_lol.mp3", "exp/popstars")
-    wav_list = preprocess("/Users/mac/personal-collections/music/league-of-legends/kda/star_lol.mp3", "exp/popstars")
-    trans_loop(wav_list)
+        sys.exit(0)
+    mp3_file = sys.argv[1]
+    output_folder = sys.argv[2]
+    
+    wav_list = glob(os.path.join(output_folder, "chunk-*.wav"))
+    wav_list.sort()
+    if len(wav_list) == 0:
+        wav_list = preprocess(mp3_file, output_folder)
+    print(f"Get {len(wav_list)} segments after preprocessing.")
+    trans_loop(wav_list, output_folder)
