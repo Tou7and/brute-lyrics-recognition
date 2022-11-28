@@ -1,0 +1,5 @@
+ffmpeg-python==0.2.0
+webrtcvad==2.0.10
+torch==1.13.0
+whisper==1.0
+edit-distance==1.0.4
