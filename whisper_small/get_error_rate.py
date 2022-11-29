@@ -82,7 +82,7 @@ if __name__ == "__main__":
     cer, counts = get_er(y, x, unit="char")
     print("CER: ", cer, counts)
     
-    wer, counts = get_er(y, x,)
+    wer, counts = get_er(y, x)
     print("WER: ", wer, counts)
-    
     # compute_errors_japanese(y, x)
+    # compute_errors_english(y, x)
